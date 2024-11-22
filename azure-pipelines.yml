@@ -32,3 +32,21 @@ steps:
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+- task: DotNetCoreCLI@2
+  inputs:
+    azureSubscription: 'BT Azure subscription(d9495062-fe99-4b2d-9a80-8eb442a7af53)'
+    command: 'publish'
+    publishWebProjects: true
+
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'BT Azure subscription(d9495062-fe99-4b2d-9a80-8eb442a7af53)'
+    appType: 'webApp'
+    WebAppName: 'webappdemo302'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+- task: DotNetCoreCLI@2
+  inputs:
+    azureSubscription: 'BT Azure subscription(d9495062-fe99-4b2d-9a80-8eb442a7af53)'
+    command: 'publish'
+    publishWebProjects: true
